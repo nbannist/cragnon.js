@@ -23,3 +23,6 @@ v0.0.1 - Only the beginnings of a library are present lots of bugs being worked 
 Cheers,
 
 Nicholas
+
+One more thing...
+Wonder if it would be a good idea to make a base library that uses the proper, standards way of doing DOM manipulations, and then having other code override functions when 
