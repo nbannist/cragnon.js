@@ -25,4 +25,4 @@ Cheers,
 Nicholas
 
 One more thing...
-Wonder if it would be a good idea to make a base library that uses the proper, standards way of doing DOM manipulations, and then having other code override functions when 
+Wonder if it would be a good idea to make a base library that uses the proper, standards way of doing DOM manipulations, and then having other code override functions when necessary to do things in a proprietary way.
