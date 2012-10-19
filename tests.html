@@ -18,15 +18,21 @@
 			padding: 5px;
 			margin: 5px;
 		}
+		#text-input {
+			width: 95%;
+			height: 50px;
+		}
 	</style>
 </head>
 <body>
 	<div class="page">
 		<div class="centered_container">
 			<input type="button" value="run tests" id="run_tests" name="run_tests" />
-		</div>	
+		</div>
+		<div id="char-count-output">#0</div>
 		<div id="output" class="console scroll-area"></div>
-		<div id="search_area" class="scroll-area">
+		<div id="search_area" class="scroll-area variable-height silly-monkey">
+			<textarea id="text-input"></textarea>
 			<ul>
 				<li class="odd">one</li>
 				<li class="even">two</li>
@@ -149,6 +155,19 @@
 			return parseFloat(value.replace(/[^,0-9\.]/gi, '')); // TODO: is the comma needed? can we strip it safely?
 		}
 
+		function calculateCharacterCount(text) {
+			var output = document.querySelectorAll('#char-count-output')[0],
+				charCount = 0;
+
+			charCount = text.length;
+			output.innerHTML = '#' + charCount + '';
+		}
+
+		var textBox = document.querySelectorAll('#text-input')[0];
+		
+		textBox.onkeyup = function (e) {
+			calculateCharacterCount(this.value);
+		};
 
 		resizeUI();
 	</script>
@@ -159,6 +178,9 @@
 		runTestButton.onclick = function (e) {
 			runTests(); // see runTests function in test.js
 		};
+		
+
+
 	</script>
 </body>
 </html>
