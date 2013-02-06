@@ -1,0 +1,324 @@
+
+	/*
+		Function: isPathDataValid(data)
+		@data: the data to validate
+	*/
+	/*
+	...or a subset of an SVG path string (see http://www.w3.org/TR/SVG/paths.html), where only the moveto, closepath and lineto commands are accepted. The path must be connected, so the moveto command must only appear at the beginning and the closepath may optionally appear only at the end. The lineto must accept both absolute and relative integer coordinates.
+	*/
+	
+	
+	/*
+
+		$Description:
+		@Parameters:
+		#Returns:
+		&Usage:
+	*/
+	Path.prototype.isPathDataValid = function (data) {
+		var letterTest = /[A-Ka-kN-Yn-y]/gi, // don't look for "l||L", "m||M", or "z||Z"
+			l = [], // lineTo
+			m = [], // moveTo
+			z = [], // closePath
+			data = data || this.input; // if given data is undefined (or otherwise falsey), then use this.data
+		
+		/* 
+		SVG path string possibilities seem a bit complicated for a regular expression only check 
+		*/
+
+		// if there is no data, it is not valid
+		if (typeof data === 'undefined' || data === null || typeof data !== 'string') {
+			// console.log('Data is not a string');
+			return false;
+		}
+
+
+		// check if there are any letters aside from "MmLlZz"; fail if there are
+		// [NOT QUITE CORRECT] +++
+		// check for Mm add "0 0" if it doesn't already exist as the initial points (replace "M||m")
+		// check for Zz add first point pair if it does (replace "Z||z")
+		// split on the letters
+		// split on 
+		/// +++++
+		
+
+		
+		
+
+		data = data.trim();
+		/* 
+		moveToExists
+			$Description: tests for the move to svg path parameter in the string
+			@parameters: testData - the data to test
+			#returns:
+			true if move to path parameter exists where it should (beginning of string)
+			false if it does not
+		*/
+		function moveToExists(testData) {
+			var mTest = /[mM]/;
+			testData = testData.trim();
+
+			if (mTest.test(testData)) { // check for M
+				return (testData[0].toLowerCase() === 'm');
+			}
+			return false;
+		}
+
+		/* 
+		closePathExists 
+			$Description: tests for a close path svg path parameter in the string
+			@Parameters: testData - the data to test - String
+			#returns:
+			true if the close path parameter exists and is in the proper place.
+			false otherwise;
+		*/
+		function closePathExists(testData) {
+			var zTest = /[zZ]/;
+			testData = testData.trim();
+
+			if (zTest.test(testData)) {
+				// look at the last character, in lowercase and tell me if it's a 'z'
+				return (testData[testData.length-1].toLowerCase() === 'z');
+			}
+			return false;
+		}
+
+		/* 
+		lineToExists
+			$description: tests for Line To SVG parameter
+			@parameters: testData - String - the data to test
+			#returns:
+			true if line to command exists
+			false otherwise
+		*/
+		function lineToExists(testData) {
+			var lTest = /[lL]/;
+			testData = testData.trim();
+
+			return lTest.test(testData);
+		}
+
+		if (lineToExists(data)) {
+			// console.log('Line To Command Exists.');
+			// both move to and close path exist
+			//l = data.match(/[ ]*l[ ]*([0-9\.*]+ [0-9\.*]+)+/gi);
+			m = data.match(/[m|M][ ]*[^LlZz]+/g);
+			l = data.match(/[l|L][ ]*[^MmZzLl]+/g);
+			z = data.match(/[z|Z]/gi);
+
+
+			if (moveToExists(data) && closePathExists(data)) {
+				/*
+					close path = move to point
+				*/
+
+
+			} // move to exists but no close path
+			else if (moveToExists(data) && !closePathExists(data)) {
+				/*
+					the last two points of l[] must equal m[] 
+				*/
+
+			} // close path exists but not move to
+			else if (!moveToExists(data) && closePathExists(data)) {
+				/*
+					close path point must be (0, 0)
+				*/
+				m = [[0,0]];
+				z = [[0,0]];
+				// l = ???
+
+			} // neither move to nor close path exist; only line tos
+			else if (!moveToExists(data) && !closePathExists(data)) {
+				/*
+					first and last points must be (0, 0)
+				*/
+				/// only line to command exists.
+				m = [[0, 0]];
+				z = [[0, 0]];
+
+				// trim, find "l||L", get rest of string
+				// l = data.trim().
+
+
+			}
+		}
+		else {
+			//console.log('No Line To Command: Must have at least one.');
+			return false;
+		}
+
+		return false; // moveToExists(data);  // letterTest.test(data);
+	}
+	Path.isPathDataValid = Path.prototype.isPathDataValid;
+
+
+
+
+	/*
+		Function: isArrayDataValid(data)
+		@data: the data to validate
+		# returns: 
+		true if data is OK
+		false if data is not OK
+		********************************
+		[NOT YET TESTED]
+		********************************
+	*/
+	/*
+
+			$Description:
+			@Parameters:
+			#Returns:
+			&Usage:
+		*/
+	Path.prototype.isArrayDataValid = function (data) {
+		var arrayIndex = 0,
+			pointsIndex = 0,
+			pointX,
+			pointY;
+		/* 
+		data should be an Array whose elements are Arrays of pairs of INTs
+		*/
+		if (__.isArray(data, true)) { // strict check for Array
+			
+			for (arrayIndex = 0; arrayIndex < data; arrayIndex++) {
+
+				if (__.isArray(data[arrayIndex], true)) { // strict check, again
+
+					if (data[arrayIndex].length === 2) {
+						pointX = data[arrayIndex][0];
+						pointY = data[arrayIndex][1];
+
+						if (!_.isNumber(pointX) || !_.isNumber(pointY)) {
+							return false;
+						}
+					}
+					else {
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+			return true; // if it gets through, it's of the correct form
+		}
+		return false;
+	};
+	Path.isArrayDataValid = Path.prototype.isArrayDataValid;
+
+
+
+	/* closePath
+		$description:
+		@parameter: none
+		#returns: self; so you can chain commands
+	*/
+	Path.prototype.closePath = function () { 
+		var self = this;
+
+		// do we want to limit closing to Paths 3 or longer? (paths 2 or less are just lines or points)
+		// if (self.length > 2) ???
+		if (self.length > 0) {
+			self.push(self[0]);
+			self.closed = true; 
+		}
+
+		return self; 
+	}; // incomplete
+	Path.closePath = Path.prototype.closePath;
+
+	/*
+
+		$Description:
+		@Parameters:
+		#Returns:
+		&Usage:
+	*/
+	Path.prototype.openPath = function () {
+		self.closed = false;
+	};
+	Path.openPath = Path.prototype.openPath;
+
+	/* lineTo
+		$description:
+		@parameter: point
+		#returns: self; so you can chain commands.
+	*/
+	Path.prototype.lineTo = function (point) { 
+		var self = this;
+
+		/*
+			if point is an array:
+				check if it is: 
+				a) a point: an array of ints of length 2
+				b) an array of points
+					add each to the end of the line to commands
+					if path is closed readjust afterward
+
+			if point is a string:
+				make sure it's valid SVG
+				parse it into an array
+		*/
+
+
+		return self;
+	};  // incomplete
+	Path.lineTo = Path.prototype.lineTo;
+
+	/* moveTo(point)
+		$description: adds move to point to the front of the array.
+		@parameter: point
+		either an Array of integers of length two or 
+		a valid SVG move to string command (i.e., 'm 100 200', or '100 200')
+		@parmeter: replace
+		a boolean indicating whether or not the first item should be replaced (true) or
+		the point just added/prepended (false) 
+		#returns: self; so you can chain commands
+	 */
+	Path.prototype.moveTo = function (point, replace) {
+		var self = this,
+			// replace, indicates that the first point should be overridden
+			replace = replace || false; // replace is false by default
+
+		if (typeof point === 'string') {
+			point = self.convertSVGToArray(point);
+		}
+
+		if (__.isArray(point, true) && point.length === 2 &&
+				point[0] === parseInt(point[0], 10) &&
+				point[1] === parseInt(point[1], 10)) {
+			
+			if (replace) {
+				self[0] = point;
+			}  // replace = false
+			else {
+				if (self.length > 0) {
+					// prepend point 
+					self.unshift(point);
+				} // length is 0; just push point
+				else { 
+					self.push(point);
+				}
+			}
+		}
+
+		if (self.closed) { // if path was previously closed, "reclose" path
+			self.closePath();
+		}
+
+		return self;
+	}; // incomplete
+	Path.moveTo = Path.prototype.moveTo;
+
+
+
+
+
+
+
+
+
+
+	
