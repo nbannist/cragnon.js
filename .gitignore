@@ -1,1 +1,6 @@
+# Mac OS Hidden Files
 .DS_Store
+
+# Misc
+jquery-*
+scrap*

@@ -1,10 +1,50 @@
 <!doctype html>
 <html>
 <head>
-
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="qunit/qunit.css">
+	<style type="text/css">
+		body { margin-top: 60px; }
+		.centered_container { text-align: center; padding: 10px; position: fixed; top: 5px; width: 100%; }
+		.console {
+			background-color: #222;
+			color: #eee;
+			font-size: 14px;
+			line-height: 16px;
+		}
+		.scroll-area {
+			overflow: scroll;
+			border: 1px solid #333;
+			border-radius: 3px;
+			padding: 5px;
+			margin: 5px;
+		}
+		#text-input {
+			width: 95%;
+			height: 50px;
+		}
+	</style>
 </head>
 <body>
-	<h1>Documentation</h1>
-	<p>TODO</p>
+	<div class="centered_container">
+		<input type="button" value="run tests" id="run_tests" name="run_tests" />
+	</div>
+	<!-- an element for tests to use -->
+	<div id="cragnon"></div>
+
+	<!-- qunit output element -->
+	<div id="qunit"></div>
+
+	<script src="js/cragnon.js"></script>
+	<script src="qunit/qunit.js"></script>
+	<script src="js/runTests.js"></script>
+	<script>
+		// ===========================================================
+		// I don't have methods in cragnon for attaching events yet. Do it the old fashioned way. :)
+		var runTestButton = document.getElementById('run_tests');
+		runTestButton.onclick = function (e) {
+			runTests(); // see runTests function in test.js
+		};
+	</script>
 </body>
 </html>

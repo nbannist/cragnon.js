@@ -13,21 +13,37 @@
 	 * Runs tests
 	 */
 	function runTests() {
-		//test_isCragnon_method(); // _.isCragnon Method Test
-		test_select_method(); // internal/private select(); function test.
-		test_find_method(); // __.find(selector) Test
-		// test_apply_method(); // commented out
-
-		/*
-			test_clone_method
-			test_map_method
-			test_filter_method
-			test_slice_method
-		*/
+		testConstructors();
 
 
 	}
 	window.runTests = runTests;
+
+
+	// New Tests Using Qunit
+	function testConstructors() {
+		var newCragnon = new Cragnon();
+		var cragnon = Cragnon();
+			
+		test("testConstructors", function() {
+			// equal(actual, expected, msg);
+			// equal(true, true, "msg");
+			equal(Cragnon, _, "'Cragnon' should be equal to '_'");
+
+			equal(Cragnon instanceof Array, _ instanceof Array, "Cragnon and _ are instanceof Array");
+
+			equal(Cragnon instanceof Cragnon, _ instanceof Cragnon, "Cragnon and _ are instanceof Cragnon");
+
+			equal(true, true, "true");
+		});
+	}
+
+
+
+
+
+
+
 
 	/**
 	 * <TestName>
