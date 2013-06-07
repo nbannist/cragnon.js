@@ -26,16 +26,56 @@
 		var cragnon = Cragnon();
 			
 		test("testConstructors", function() {
-			// equal(actual, expected, msg);
-			// equal(true, true, "msg");
+			// equal(actual, expected, msg);// equal(true, true, "msg");
+            
+            // Test if Cragnon === _ // shortcut
 			equal(Cragnon, _, "'Cragnon' should be equal to '_'");
-
+            // Does Cragnon inherit from Array?
 			equal(Cragnon instanceof Array, _ instanceof Array, "Cragnon and _ are instanceof Array");
-
+            // Cragnon and _ are instance of Cragnon
 			equal(Cragnon instanceof Cragnon, _ instanceof Cragnon, "Cragnon and _ are instanceof Cragnon");
+            
+            equal(true, true, ".isArray() tests ============================ ");
+            equal(_.isArray({}), false, "FALSE. {} is not an Array");
+            equal(_.isArray([]), true, "TRUE. [] is an Array");
+            equal(_.isArray(_, false), false, "TRUE. _ is *not* an Array");
+            equal(_.isArray(_), false, "TRUE. _ is *not* a strict Array either");
+            equal(_.isArray(cragnon, false), true, "TRUE. cragnon is an Array");
+            equal(_.isArray(cragnon), false, "TRUE. cragnon is *not* a strict Array");
 
-			equal(true, true, "true");
+			equal(true, true, ".isCragnon() tests ============================ ");
+			equal(_.isCragnon(_), false, "TRUE. _ is not a Cragnon instance");
+			equal(_.isCragnon(_, false), true, "TRUE. _ is a Cragnon instance or *is* Cragnon");
+			equal(_.isCragnon(cragnon), true, "TRUE. cragnon is a Cragnon");
+			equal(_.isCragnon(cragnon, false), true, "TRUE. cragnon is a Cragnon instance or *is* Cragnon");
+			equal(_.isCragnon(newCragnon), true, "TRUE. newCragnon is a Cragnon");
+			equal(_.isCragnon({}), false, "TRUE. {} is not a Cragnon");
+			equal(_.isCragnon([]), false, "TRUE. [] is not a Cragnon");
+
+
+            equal(true, true, ".isObject() tests ============================ ");
+            equal(_.isObject({}), true, "{} is an Object");
+            equal(_.isObject([]), false, "[] is not a strict Object");
+            equal(_.isObject([], false), true, "[] is an Object");
+
+
+            
+            
+            /*
+            var extendTest1 = newCragnon.extend({},{},{});
+            var extendTest2 = cragnon.extend({},{},{});
+
+var isEmpty = function(obj) {
+  return Object.keys(obj).length === 0;
+}
+            equal(_.isObject(extendTest1) && _.isEmpty(extendTest1), _.isObject({}}) && _.isEmpty({}}), "{} should be returned");
+
+            equal(_.isObject() && _.isObject(, {}, "{} should be returned");
+            */
+            
+			equal(true, true, "FIN");
 		});
+        
 	}
 
 
