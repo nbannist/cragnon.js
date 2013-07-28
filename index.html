@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="qunit/qunit.css">
 	<style type="text/css">
 		body { margin-top: 60px; }
-		.centered_container { text-align: center; padding: 10px; position: fixed; top: 5px; width: 100%; }
+		.centered-container { text-align: center; padding: 10px; position: fixed; top: 5px; width: 100%; }
 		.console {
 			background-color: #222;
 			color: #eee;
@@ -26,25 +26,33 @@
 	</style>
 </head>
 <body>
-	<div class="centered_container">
-		<input type="button" value="run tests" id="run_tests" name="run_tests" />
+	<div class="centered-container">
+		<input type="button" value="run tests" id="run-tests" name="run-tests" />
 	</div>
+
 	<!-- an element for tests to use -->
 	<div id="cragnon"></div>
 
 	<!-- qunit output element -->
 	<div id="qunit"></div>
 
-	<script src="js/cragnon.js"></script>
+	<script src="js/cragnon/cragnon.js"></script>
+	<script src="js/cragnon/cragnon.extend.js"></script>
+	<script src="js/cragnon/cragnon.predicates.js"></script>
+	<script src="js/cragnon/cragnon.isequal.js"></script>
+	<!-- <script src="js/cragnon/cragnon.equal.js"></script> -->
 	<script src="qunit/qunit.js"></script>
 	<script src="js/runTests.js"></script>
 	<script>
 		// ===========================================================
 		// I don't have methods in cragnon for attaching events yet. Do it the old fashioned way. :)
-		var runTestButton = document.getElementById('run_tests');
+		var runTestButton = document.getElementById('run-tests');
 		runTestButton.onclick = function (e) {
 			runTests(); // see runTests function in test.js
 		};
+
+		runTests();
+
 	</script>
 </body>
 </html>

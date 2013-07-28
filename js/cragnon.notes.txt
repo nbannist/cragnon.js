@@ -1,0 +1,104 @@
+
+//
+// ***********************************
+//    Array Methods that need to be overridden to work with Cragnon because they return new Arrays
+//    X concat
+//    - 
+// ***********************************
+//    TODO: 
+//    Select/Find:
+//    - Filter out duplicates. 
+//    - Filter out previous elements.
+//
+//
+//
+//
+//    Cragnon Functions to add:
+//    .when() - Cragnon.when(eventType, func, args)
+//    exp:
+//    element.when('clicked', function (e) {
+//        // do this stuff
+//    });
+//    element.on('click', function (e) {
+//        // do stuff
+//    });
+//
+//
+//   
+
+///**
+//  Promises / Monads
+//
+//  This Design Pattern should probably be incorporated for async calls 
+//  (or as an option) because the topic is pretty hot and this is all about learning.
+//
+//  
+//
+//
+//*/
+
+
+
+
+
+// Promises called "pledges" here
+// First Try
+/*
+(function ($, doc, window, undefined) {
+  "use strict";
+
+  var pledge = function () {
+
+
+    return {
+      then: function () {
+
+      },
+    };
+  };
+}(Cragnon, window.document, window));
+*/
+
+
+
+
+/** .extend()
+ * 
+ * 
+ * 
+ * 
+ */
+/* USAGE EXAMPLES
+_.extend({},{},{},{},{}, ...); // first object holds named options
+// if first item is "falsey", then use default options
+_.extend(null,{},{},{},{}, ...);
+_.extend(false,{},{},{},{}, ...);
+_.extend(0,{},{},{},{}, ...);
+_.extend(undefined,{},{},{},{}, ...);
+
+
+// Extend given thing:
+_.extend({"options": {...}, "target": {...}, "augments": [{},{},{},{},...]});
+_.extend(false, {}, {}, {}, {});
+
+*/
+
+
+
+
+
+
+
+
+// $.set("complement", options, obj1, obj2 [, obj3,...]);
+//	$.complement(options, obj1, obj2 [, obj3,...]);
+//returns an object with properties defined outside of first object
+//
+// $.set("union", options, obj1, obj2 [, obj3,...]) 
+//	$.union(options, obj1, obj2 [, obj3,...])
+//returns an object with properties from all objects
+//
+// $.set("intersection", options, obj1, obj2 [, obj3,...]) 
+//	$.intersection(options, obj1, obj2 [, obj3,...]);
+//returns an object with properties that exist in all given objs.
+//
