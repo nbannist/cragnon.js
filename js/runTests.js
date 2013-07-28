@@ -20,8 +20,14 @@ console.log('testConstructors()...');
 console.log('testPredicates()...');
 		testPredicates();
 
-console.log('testDearGodWhatIsThatThing()...');
-		testDearGodWhatIsThatThing();
+console.log('testDearGodWhatIsThatThingStrict()...');
+		testDearGodWhatIsThatThingStrict();
+console.log('testDearGodWhatIsThatThingLax()...');
+		testDearGodWhatIsThatThingLax();
+
+console.log('testCopy()...');
+		testCopy();
+
 
 //console.log('testExtend()...');
 //		testExtend();
@@ -766,527 +772,81 @@ console.log('testDearGodWhatIsThatThing()...');
 	
 	}
 
-	function testDearGodWhatIsThatThing() {
+	function testDearGodWhatIsThatThingStrict() {
 
-		test('test DearGodWhatIsThatThing', function () {
-			equal($.DearGodWhatIsThatThing([]), 'array', 'it is "array"');
-			equal($.DearGodWhatIsThatThing({}), 'object', 'it is "object"');
-			equal($.DearGodWhatIsThatThing(true), 'boolean', 'it is "boolean"');
-			equal($.DearGodWhatIsThatThing(false), 'boolean', 'it is "boolean"');
-			equal($.DearGodWhatIsThatThing(0), 'number', 'it is "number"');
-			equal($.DearGodWhatIsThatThing(1), 'number', 'it is "number"');
-			equal($.DearGodWhatIsThatThing(NaN), 'nan', 'it is "nan"');
-			equal($.DearGodWhatIsThatThing(Infinity), 'infinity', 'it is "infinity"');
-			equal($.DearGodWhatIsThatThing(null), 'null', 'it is "null"');
-			equal($.DearGodWhatIsThatThing(undefined), 'undefined', 'it is "undefined"');
-			equal($.DearGodWhatIsThatThing(new Date()), 'date', 'it is "date"');
-			equal($.DearGodWhatIsThatThing(/[0-9]+/), 'regexp', 'it is "regexp"');
-			equal($.DearGodWhatIsThatThing(function () {}), 'function', 'it is "function"');
-			equal($.DearGodWhatIsThatThing(new Cragnon()), 'cragnon', 'it is "cragnon"');
+		test('test testDearGodWhatIsThatThingStrict', function () {
+			equal($.dearGodWhatIsThatThing([]), 'array', 'it is "array"');
+			equal($.dearGodWhatIsThatThing({}), 'object', 'it is "object"');
+			equal($.dearGodWhatIsThatThing(true), 'boolean', 'it is "boolean"');
+			equal($.dearGodWhatIsThatThing(false), 'boolean', 'it is "boolean"');
+			equal($.dearGodWhatIsThatThing(0), 'number', 'it is "number"');
+			equal($.dearGodWhatIsThatThing(1), 'number', 'it is "number"');
+			equal($.dearGodWhatIsThatThing(NaN), 'nan', 'it is "nan"');
+			equal($.dearGodWhatIsThatThing(Infinity), 'infinity', 'it is "infinity"');
+			equal($.dearGodWhatIsThatThing(null), 'null', 'it is "null"');
+			equal($.dearGodWhatIsThatThing(undefined), 'undefined', 'it is "undefined"');
+			equal($.dearGodWhatIsThatThing(new Date()), 'date', 'it is "date"');
+			equal($.dearGodWhatIsThatThing(/[0-9]+/), 'regexp', 'it is "regexp"');
+			equal($.dearGodWhatIsThatThing(function () {}), 'function', 'it is "function"');
+			equal($.dearGodWhatIsThatThing(new Cragnon()), 'cragnon', 'it is "cragnon"');
 		});
 	}
 
+	function testDearGodWhatIsThatThingLax() {
 
-/* Can't really test until isEqual is written
-function testExtend() {
-	var defaults = {initialize: false, getDataFromLocalStorage: false, smoothify: false },
-		options = {initialize: true, getDataFromLocalStorage: false, smoothify: true },
-		t3,
-		t4,
-		t5;
-
-	options = $.extend(false, defaults, options);
-
-	test('test $.extend(...)', function () {
-
-	});
-}
-
-
-
-/*
-	function testEqual() {
-		test('Test $.equal(...)', function () {
-			//equal($.equal(null, null), true, 'equal(null,null);');
-			//equal($.equal({}, {}), true, 'equal({}, {});');
-			equal($.equal({a: 4}, {b: 4}), false, 'equal({a: 4}, {b: 4}); false');
-			//equal($.equal([], []), true, 'equal([], []);');
-			//equal($.equal(dom1, dom2), true, 'equal(dom1, dom2); true');
-			//equal($.isEqual(dom1, dom3), false, 'isEqual(dom1, dom3); false');
+		test('test testDearGodWhatIsThatThingLax', function () {
+			equal($.dearGodWhatIsThatThing([], {strict: false}), 'array', 'it is "array"');
+			equal($.dearGodWhatIsThatThing({}, {strict: false}), 'object', 'it is "object"');
+			equal($.dearGodWhatIsThatThing(true, {strict: false}), 'simple', 'it is "simple"');
+			equal($.dearGodWhatIsThatThing(false, {strict: false}), 'simple', 'it is "simple"');
+			equal($.dearGodWhatIsThatThing(0, {strict: false}), 'simple', 'it is "simple"');
+			equal($.dearGodWhatIsThatThing(1, {strict: false}), 'simple', 'it is "simple"');
+			equal($.dearGodWhatIsThatThing(NaN, {strict: false}), 'simple', 'it is "simple"');
+			equal($.dearGodWhatIsThatThing(Infinity, {strict: false}), 'simple', 'it is "simple"');
+			equal($.dearGodWhatIsThatThing(null, {strict: false}), 'simple', 'it is "simple"');
+			equal($.dearGodWhatIsThatThing(undefined, {strict: false}), 'simple', 'it is "simple"');
+			equal($.dearGodWhatIsThatThing(new Date(), {strict: false}), 'object', 'it is "object"');
+			equal($.dearGodWhatIsThatThing(/[0-9]+/, {strict: false}), 'object', 'it is "object"');
+			equal($.dearGodWhatIsThatThing(function () {}, {strict: false}), 'object', 'it is "object"');
+			equal($.dearGodWhatIsThatThing(new Cragnon(), {strict: false}), 'array', 'it is "array"');
 		});
 	}
-
-
-
-
-
-	function testIsEqual() {
-		var crag = Cragnon(),
-			dom1 = document.getElementById('qunit'),
-			dom2 = document.getElementById('qunit'),
-			dom3 = document.getElementById('cragnon');
-
-
-		test('Test $.isEqual(...)', function () {
-			//equal($.isEqual(null, null), true, 'isEqual();');
-			equal($.isEqual(dom1, dom2), true, 'isEqual(dom1, dom2); true');
-			//equal($.isEqual(dom1, dom3), false, 'isEqual(dom1, dom3); false');
-		});
-	}
-
-
-
-	function testExtend() {
-		var crag = Cragnon(),
-// Objects
-			obj1 = {a:'thing', b:1},
-			obj2 = {b:4, c:42},
-			objectsCombined12 = $.extend(false, obj1, obj2),
-			obj12 = {a: 'thing', b: 4, c: 42},
-			obj12b = {a: 'thing', b: 4, c: 33},
-			obj3 = {obj1: {5:true}, obj2: obj2},
-			obj4 = {},
-			combinedObect23 = {},
-// Arrays
-			array1 = [3,4,5,1,4,9, 19, 49, 18, 10, 10, 1000],
-			array2 = [null, "string", 'stringy', {}, 234, objectsCombined12],
-			array3 = [],
-			array4 = [],
-			arr12 = [null, "string", 'stringy', {}, 234, {a:'thing', b:4, c: 42}, 19, 49, 18, 10, 10, 1000],
-			arr12b = [null, "string", 'stringy', {}, 3234, {a:'thing', b:4}, 19, 49, 18, 10, 10, 1000],
-			arrayCombined = $.extend(array1, array2);
-
-
-		array3[1] = 2;
-		array3.push('string')
-		array3.push('stringy');
-
-
-		test('Test $.evolve(...)', function () {
-			equal(true, true, 'Start');
-
-			equal($.isEqual(arr12b, arrayCombined), false, 'extend an array');
-			equal($.isEqual(objectsCombined12, obj12b), false, 'extend an object');
-
-			equal($.isEqual(arr12, arrayCombined), true, 'extend an array');
-			equal($.isEqual(objectsCombined12, obj12), true, 'extend an object');
-
-			equal(true, true, 'FIN');
-		});
-
-	}
-
-
 
 
 	function testCopy() {
-		var newCragnon = new Cragnon();
-		var cragnon = Cragnon();
-		var valuesTest = {
-			emptyObject: {},
-			emptyArray: [],
-			undefinedValue: undefined,
-			nullValue: null,
-			emptyString: "",
-			aNumber: 0,
-			aCragnon: new Cragnon(),
-			aNaNValue: NaN,
-
-		};
-
-		console.log('-- testCopy()');
-		test('Test $.copy(...)', function () {
-			equal(true, true, "Start Copy Tests");
-
-			equal($.isEmpty({}), true, "{} is empty");
-			equal($.isEmpty([]), true, "[] is empty");
-			//equal($.isEmpty(null), true, "null is empty");
-			//equal($.isEmpty(undefined), true, "undefined is empty");
-			//equal($.isEmpty(NaN), true, "NaN is empty?");
-
-			equal($.isEqual($.copy({}), {}), true, '"{}" copied');
-			equal($.copy(false), false, '"false" value copied');
-
-			equal(true, true, "FIN - Copy Tests");
-		});
-		console.log('end testCopy();')
-	}
-
-
-
-	function testIsBoolean() {
-		var newCragnon = new Cragnon();
-		var cragnon = Cragnon();
-		var valuesTest = {
-			emptyObject: {},
-			emptyArray: [],
-			undefinedValue: undefined,
-			nullValue: null,
-			emptyString: "",
-			aNumber: 0,
-			aCragnon: new Cragnon(),
-			aNaNValue: NaN,
-
-		};
-
-		test('testIsBoolean', function () {
-			equal(true, true, "Start isBoolean Tests");
-
-			equal($.isBoolean(true), true, '"true" is a boolean');
-			equal($.isBoolean(false), true, '"false" is a boolean');
-			equal($.isBoolean(0), false, '"0" is *not* a boolean');
-			equal($.isBoolean(1), false, '"1" is *not* a boolean');
-
-			equal($.isBoolean(NaN), false, '"NaN" is *not* a boolean');
-
-			//equal($.copy(NaN), NaN, "Empty Object");
-
-
-			equal(true, true, "FIN - isBoolean Tests");
-		});
-	}
-
-
-
-
-
-
-
-
-
-	///
-	//  <TestName>
-	//  <TestDescription>
-	// 	
-	function testName() {
-		var crObj = _(),
-			crLib = _,
-			arrayObject = [],
-			objectObj = {};
-
-		console.log('');
-		console.log('** BEGIN testName Test *****');
-
-		// .. Test BODY
-
-		console.log('** END testName Test *****');
-		console.log('');
-	}
-
-
-	//
-	//  test_isCragnon_method
-	//  Tests the isCragnon Method 
-	//
-	function test_isCragnon_method() {
-		var crObj = _(),
-			crLib = _,
-			arrayNotCragnon = [],
-			objectNotCragnon = {};
-
-		console.log('');
-		console.log('** BEGIN test_isCragnon_method Test *****');
-
-		if ($.isCragnon(crObj)) {
-			console.log('cragnon is cragnon');
-		}
-		else {
-			console.log('cragnon is NOT cragnon');	
-		}
-
-		if ($.isCragnon(crLib)) {
-			console.log('library is cragnon');
-		}
-		else {
-			console.log('library is NOT cragnon');	
-		}
-
-		if ($.isCragnon(arrayNotCragnon)) {
-			console.log('array is cragnon');
-		}
-		else {
-			console.log('array is NOT cragnon');	
-		}
-
-		if ($.isCragnon(objectNotCragnon)) {
-			console.log('object is cragnon');
-		}
-		else {
-			console.log('object is NOT cragnon');	
-		}
-
-		console.log('** END test_isCragnon_method Test *****');
-		console.log('');
-	}
-
-	//
-	// test_find_method
-	// tests the $.find() method
-	//
-	function test_find_method() {
-		var crag, // = _,
-			ulSecond, // = crObj.find('ul'),
-			lisOdds,
-			liMenu; // = crObj.find('li');
-
-		console.log('');
-		console.log('** BEGIN test_find_method Test *****');
-
-		console.log('Find all uls...');
-		ulSecond = _('ul.second');
-		//crag = _();
-		lisOdds = ulSecond.find('li.odd');
-
-		liMenu = _('.menu li');
-
-		console.dir(ulSecond);
-		console.dir(lisOdds);
-		console.dir(liMenu);
-
-		console.log('** END test_find_method Test *****');
-		console.log('');
-	}
-
-
-	//
-	// test_find_method
-	// tests the $.find() method
-	///	
-	function test_select_method() {
-		var crag = {},
-			crag2 = {};
-
-		console.log('');
-		console.log('** BEGIN test_select_method Test *****');
-
-		// .select(): used to make a new Cragnon object
-		// simple test
-		crag = Cragnon.select('ul'); // select basically is new Cragnon('ul');
-
-		// .find(): used to make a new Cragnon Object within the scope of the current Cragnon object
-		// Should find the same thing as above
-		crag2 = Cragnon.find('ul');
-
-		// .push(): used to add items to the current Cragnon Object
-			// What does this mean for the .context property?
-
-
-		// .concat(): makes a new Cragnon object from the elements of both the current and given Cragnon Objects or CSS selector.
-			// what does this mean for the .context property?
-
-		console.dir(crag);
-
-
-		console.log('** END test_select_method Test *****');
-		console.log('');
-	}
-
-
-
-
-
-
-	//
-	// test_filter_method
-	// tests the new filter method
-	//	
-	function test_filter_method() {
-		var crObj = _(),
-			crLib = _,
-			arrayObject = [],
-			objectObj = {};
-
-		console.log('');
-		console.log('** BEGIN test_filter_method Test *****');
-
-		// .. Test BODY
-
-		console.log('** END test_filter_method Test *****');
-		console.log('');
-	}
-	
-
-	//
-	// test_map_method
-	// tests the new filter method
-	//	
-	function test_map_method() {
-		var crObj = _(),
-			crLib = _,
-			arrayObject = [],
-			objectObj = {};
-
-		console.log('');
-		console.log('** BEGIN test_map_method Test *****');
-
-		// .. Test BODY
-
-		console.log('** END test_map_method Test *****');
-		console.log('');
-	}
-
-
-	//
-	// test_slice_method
-	// tests the new filter method
-	//
-	function test_slice_method() {
-		var crObj = _(),
-			crLib = _,
-			arrayObject = [],
-			objectObj = {};
-
-		console.log('');
-		console.log('** BEGIN test_slice_method Test *****');
-
-		// .. Test BODY
-
-		console.log('** END test_slice_method Test *****');
-		console.log('');
-	}
-
-
-	//
-	// test_clone_method
-	// tests the new filter method
-	//	
-	function test_clone_method() {
-		var crObj = _(),
-			crLib = _,
-			arrayObject = [],
-			objectObj = {};
-
-		console.log('');
-		console.log('** BEGIN test_clone_method Test *****');
-
-		// .. Test BODY
-
-		console.log('** END test_clone_method Test *****');
-		console.log('');
-	}
-
-
-
-
-	//
-	// test_apply_method
-	// test what the apply method does
-	///	
-	function test_apply_method() {
-		var crObj = _(),
-			crObj2 = _(),
-			value;
-
-		console.log('');
-		console.log('** BEGIN test_apply_method Test *****');
-
-		crObj = new Cragnon('li:nth-child(even)');
-		console.dir(crObj);		
-		//crObj.context = new Cragnon('ul');
-		console.dir(crObj);
-
-		crObj2 = new Cragnon('li:nth-child(odd)');
-
-		value = [].concat.apply(crObj, crObj2);
-
-		console.log('value');
-		console.dir(value);
-
-		console.log('** END test_apply_method Test *****');
-		console.log('');
-	}
-
-
-	function testselectorFromElement() {
-		var element = document.querySelectorAll('#search_area')[0],
-			selector = $.selectorFromElement(element);
-
-		//console.log('testselectorFromElement()');
-		//console.dir(element);
-		//console.log(selector);
+		var t1,
+			t2,
+			t3,
+			t4,
+			t5,
+			t6;
+
+		t1 = {a: 'g', b: 4, c: {g: 3}};
+		// .exted(...) makes a copy; doesn't mutate
+		t2 = $.extend(t1, {d: 8, c: {g: 89}, e: 0, f: 42});
+
+		t1.a = 'boobies';
+		t3 = $.copy(t1);
+
+		console.dir(t1);
+		console.dir(t2);
+		console.dir(t3);
+
+		t4 = [,,5,6,5,6,7,8,9];
+		t5 = $.extend(t4, [1,2,3,4]);
+
+		t4[0] = 32;
+		t4[1] = 99;
+
+		t6 = $.copy(t4);
+		t6[4] = 'e';
+
+		console.dir(t4);
+		console.dir(t5);
+		console.dir(t6);
 
 	}
 
-	function testStyles() {
-		var crObj = _('#search_area'),
-			styles1 = '',
-			styles2 = '',
-			styles3 = '',
-			item1Width = '';
-
-
-		// STYLES
-
-		// styles([properties])
-		styles1 = crObj.styles(['width', 'height']); // return width/height
-			console.dir(styles1);
-
-		crObj.styles([{'width': '100px'}, {'height': '100px'}]); // set width of element to 100px
-
-		// styles({properties with null values})
-		styles2 = crObj.styles({'width': undefined, 'height': undefined}); // return width/height
-			console.dir(styles2);
-
-		styles3 = crObj.styles({'width': '150px', 'height': null, 'border-radius': 0});
-		// return array of height; sets value for width.
-			console.dir(styles3);
-
-		// styles({properties with proper values})
-		crObj.styles({'width': '200px', 'height': '200px'}); // set width of element to 200px
-		
-
-		// STYLE
-
-
-		item1Width = crObj.style('width');
-		console.log(item1Width);
-		
-		crObj.style('width', '200px').style('height', '200px');
-		console.dir(crObj.styles(['width','height']));
-	}
-*/
-
-
-	/* 
-	//Commented out. To put in its own file at a later time.
-	function testGoogleCode() {
-		var isInTree = function (value, tree) {
-
-			if (typeof value === 'undefined' || value === null) { //return false if there is no value to evaluate
-				return false;
-			}
-			
-			// because tree.value can have 0, we have to use typeof instead of tree.value, which would normally evaluate to false if tree.value didn't exist.
-			if (typeof tree !== 'object' || typeof tree.value === 'undefined') { // needs to have at least .value
-				return false;
-			}
-`
-			if (tree.value === value) { //is this the value we're looking for?
-				return true;
-			}
-			else if (tree.value < value && tree.more) { // if this tree.value is too small and there is a greater option
-				return isInTree(value, tree.more);
-			}
-			else if (tree.value > value && tree.less) { // if this tree.value is too large and there is a lesser option
-				return isInTree(value, tree.less);
-			}
-
-			return false;
-		};
-
-		var myTree = {"value": 2, "less": {"value": 1, "less": {"value": 0}}, "more": {"value": 10, "less": {}}};		
-
-		console.log(isInTree(9, myTree)); // false
-		console.log(isInTree(2, myTree)); // true
-		console.log(isInTree(0, myTree)); // true
-		console.log(isInTree(10, myTree)); // true
-		console.log(isInTree(1, myTree)); // true
-		console.log(isInTree(0)); // false
-		console.log(isInTree(0, {})); // false
-
-	} 
-	// end of long comment section
-	*/ 
 
 } (window, undefined));
 
