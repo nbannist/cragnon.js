@@ -819,16 +819,21 @@ console.log('testCopy()...');
 			test3,
 			test4,
 			a = [],
-			d, 
-			r,
+			b = [],
 			optionsTest1,
 			optionsTest2;
 
-		a[0] = a;
-		d = JSON.stringify(JSON.decycle(a));
-		r = JSON.retrocycle(JSON.parse(d));
+		a[0] = 3
+		a[1] = a;
 
-		console.dir(r);
+		b[0] = 3;
+		b[1] = b;
+
+		console.dir(a);
+		console.dir(b);
+
+		//r = JSON.parse(d);
+		//console.dir(r);
 
 		test1.b = test2;
 		test1.b.f = test2;
@@ -845,6 +850,9 @@ console.log('testCopy()...');
 
 		console.dir(optionsTest1);
 		console.dir(optionsTest2);
+
+		console.log('equal?: ' + $.isEqual(optionsTest1, optionsTest2));
+		console.log('equal?: ' + $.isEqual(a, b));
 
 		/*test('test $.copy(...)', function () {
 

@@ -9,41 +9,131 @@
 	$.pt.isEqual = function (thing1, thing2) {
 console.log('isEqual');
 		var type1 = $.dearGodWhatIsThatThing(thing1), 
-			type2 = $.dearGodWhatIsThatThing(thing2);
+			type2 = $.dearGodWhatIsThatThing(thing2),
+			decycledCopyThing1,
+			decycledCopyThing2;
+
+
+			function areTheseEqual(value1, value2) {
+				var type1 = $.dearGodWhatIsThatThing(value1, {strict: false}), 
+					type2 = $.dearGodWhatIsThatThing(value2, {strict: false}),
+					prop,
+					index;
+
+				if (type1 === type2) {
+					if (type1 === 'object') {
+						for (prop in value1) {
+							if (value1.hasOwnProperty(prop) && value2.hasOwnProperty(prop)) {
+								type1 = $.dearGodWhatIsThatThing(value1[prop], {strict: false}); 
+								type2 = $.dearGodWhatIsThatThing(value2[prop], {strict: false});
+								if (type1 === type2) {
+									if (type1 === 'object' || type1 === 'array') {
+// Arrays or Objects
+										return (areTheseEqual(value1[prop], value2[prop]));
+									}
+									else if (value1[prop] === value2[prop]) {
+// Simple value
+										return true;
+									}
+									else {
+										return false;
+									}
+								}
+								else {
+									return false;
+								}
+							}
+							else {
+								return false;
+							}
+						}
+					}
+					else if (type1 === 'array') {
+// we're working with an array, folks!
+						if (value1.length === value2.length) {
+// make sure the lengths are the same. if they are different then arrays can't be the same
+							for (index = 0; index < value1.length; index++) {
+// loopsy loopsy loo
+								if (value1[index] !== undefined && value2[index] !== undefined) {
+// what if the values at an index is undefined?
+// get the types
+									type1 = $.dearGodWhatIsThatThing(value1[index], {strict: false}); 
+									type2 = $.dearGodWhatIsThatThing(value2[index], {strict: false});
+
+									if (type1 === type2) {
+// if the types are the same, we might have a winner.
+										if (type1 === 'object' || type1 === 'array') {
+// Arrays or Objects
+											return (areTheseEqual(value1[index], value2[index]));
+										}
+										else if (value1[index] === value2[index]) {
+// Simple value
+											return true;
+										}
+										else {
+											return false;
+										}
+									}
+									else {
+										return false;
+									}
+								}
+								else {
+console.log('value1[' + index + '] || value2[' + index + '] === undefined: ' + value1[index]);
+									return false;
+								}
+							}
+						}
+						else {
+console.log('lengths not equal');
+							return false;
+						}
+					}
+					else if (type1 === 'simple') {
+// simple values.
+console.log('simple values');
+						if (value1 === value2) {
+// values are equal
+							return true;
+						}
+// return false otherwise
+						return false;
+					}
+					else {
+console.log('type unknown...what to do?');
+						return false;
+					}
+				}
+				else {
+					return false;
+				}
+			}
+
+
+
 
 // easy check, if they are of different types, then they are not equal.
 		if (type1 === type2) {
 // split for objects, arrays, and simple values.
 // only need to check one of the objects if they are the same
-			if (type1 === 'object') {
-// objects
-				console.log('Objects may have circular references. abort.');
-				return false; // TEMP
-				t1 = $.copy(thing1, {deep: true, decycle: true});
-				t2 = $.copy(thing2, {deep: true, decycle: true});
-
-			}
-			else if (type1 === 'array') {
-// array objects
-				console.log('Arrays may have circular references. abort.');
-				return false; // TEMP
-				t1 = $.copy(thing1, {deep: true, decycle: true});
-				t2 = $.copy(thing2, {deep: true, decycle: true});
-
+			if (type1 === 'simple') {
+// simple values
+				return (thing1 === thing2)? true : false;
 			}
 			else {
 // simple values
-				if (thing1 === thing2) {
-// simply check if they are strictly equal
-					return true;
-				}
-				return false;
+				decycledCopyThing1 = $.copy(thing1);
+				decycledCopyThing2 = $.copy(thing2);
+				return (areTheseEqual(decycledCopyThing1, decycledCopyThing2));
 			}
 		}
 // return false for things that aren't the same type.		
 		return false;
 	};
+	$.pt.areEqual = $.pt.isEqual;
 
+	$.isEqual = $.pt.isEqual;
+	$.areEqual = $.pt.isEqual;
 /*
 
 

@@ -8,8 +8,8 @@
 // .level -- how many levels to go down.
 //
 	$.pt.copy = function (thing, settings) {
-		var defaults = {deep: true, decycle: {decycle: true, stringify: true}, level: 0},
-			options = $.merge(2, defaults, settings || {}), // merege is for single level, shallow, copies
+		var defaults = {deep: true, decycle: true, retrocycle: true, level: 0},
+			options = $.merge(1, defaults, settings || {}), // merege is for single level, shallow, copies
 			cpy = {},
 			parsed,
 			prop,
@@ -22,25 +22,31 @@
 // if options.level > 0, then we don't want to go deep, 
 // and we don't want to decycle
 			options.deep = false;
-			options.decycle.decycle = false;
+			options.decycle = false;
 		}
 
 
-		if (options.deep || options.decycle.decycle || options.level === 0) {
+		if (options.deep || options.decycle || options.level === 0) {
 // 0 is for "infinitly deep"; deep tells it to go deep
 // if options.deep === true, options.level = 0;
 			options.deep = true;
 			options.level = 0;
-			options.decycle.decycle = true;
+			options.decycle = true;
+			options.retrocycle = true;
 		}
 
-		if (options.deep && options.decycle.decycle && options.level === 0) {
+		if (options.deep && options.decycle && options.level === 0) {
 // if the options are right, decycle instead of copy
-			cpy = JSON.retrocycle(JSON.decycle(thing));
+			if (options.retrocycle === undefined || options.retrocycle === true) {
+// besure to retrocycle to get the full object back...
+				cpy = JSON.retrocycle(JSON.decycle(thing));
+			}
+			else {
+// unless we are going to compare them with $.isEqual(...)
+				cpy = JSON.decycle(thing);
+			}
 			return cpy;
 		}
-
-		console.log('regular copy');
 
 //console.log('switch!');
 		simpleType = $.dearGodWhatIsThatThing(thing, {strict: false});
