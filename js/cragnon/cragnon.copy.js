@@ -8,20 +8,40 @@
 // .level -- how many levels to go down.
 //
 	$.pt.copy = function (thing, settings) {
-		var defaults = {deep: false, decycle: false, level: 1},
-			options = $.merge(defaults, settings || {}),
+		var defaults = {deep: true, decycle: {decycle: true, stringify: true}, level: 0},
+			options = $.merge(2, defaults, settings || {}), // merege is for single level, shallow, copies
 			cpy = {},
+			parsed,
 			prop,
 			index = 0,
 			simpleType,
 			strictType;
 // options
-		if (options.deep || options.decycle || options.level === 0) {
+
+		if (options.level > 0) {
+// if options.level > 0, then we don't want to go deep, 
+// and we don't want to decycle
+			options.deep = false;
+			options.decycle.decycle = false;
+		}
+
+
+		if (options.deep || options.decycle.decycle || options.level === 0) {
 // 0 is for "infinitly deep"; deep tells it to go deep
 // if options.deep === true, options.level = 0;
 			options.deep = true;
 			options.level = 0;
+			options.decycle.decycle = true;
 		}
+
+		if (options.deep && options.decycle.decycle && options.level === 0) {
+// if the options are right, decycle instead of copy
+			cpy = JSON.retrocycle(JSON.decycle(thing));
+			return cpy;
+		}
+
+		console.log('regular copy');
+
 //console.log('switch!');
 		simpleType = $.dearGodWhatIsThatThing(thing, {strict: false});
 		strictType = $.dearGodWhatIsThatThing(thing);
@@ -31,15 +51,22 @@
 				for (index = 0; index < thing.length; index++) {
 // if options.level === 0, then options.deep must be true; 
 // otherwise, options.level should be greater than 0 (1 or above)					
-					if ((options.deep && options.level === 0) || options.level > 0) {
-// $.merge() always copies.
-						cpy[index] = $.copy(thing[index], $.merge(options, {level: (options.level-1)}));
+					simpleType = $.dearGodWhatIsThatThing(thing[index], {strict: false});
+					strictType = $.dearGodWhatIsThatThing(thing[index]);
+					if (simpleType === 'simple') {
+						cpy[index] = thing[index];
 					}
 					else {
-console.dir(options);
-console.log('^options');
-// if we are too low, just output the strict type
-						cpy[index] = strictType;
+						if ((options.deep && options.level === 0) || options.level > 0) {
+	// $.merge() always copies.
+							cpy[index] = $.copy(thing[index], $.merge(options, {level: (options.level-1)}));
+						}
+						else {
+	console.dir(options);
+	console.log('^options');
+	// if we are too low, just output the strict type
+							cpy[index] = strictType;
+						}
 					}
 				}
 				break;
@@ -47,16 +74,23 @@ console.log('^options');
 				cpy = {};
 				for (prop in thing) {
 // if options.level === 0, then options.deep must be true; 
-// otherwise, options.level should be greater than 0 (1 or above)					
-					if ((options.deep && options.level === 0) || options.level > 0) {
-// $.merge() always copies.
-						cpy[prop] = $.copy(thing[prop], $.merge(options, {level: (options.level-1)}));
+// otherwise, options.level should be greater than 0 (1 or above)				
+					simpleType = $.dearGodWhatIsThatThing(thing[prop], {strict: false});
+					strictType = $.dearGodWhatIsThatThing(thing[prop]);
+					if (simpleType === 'simple') {
+						cpy[prop] = thing[prop];
 					}
-					else {
+					else {			
+						if ((options.deep && options.level === 0) || options.level > 0) {
+// $.merge() always copies.
+							cpy[prop] = $.copy(thing[prop], $.merge(options, {level: (options.level-1)}));
+						}
+						else {
 console.dir(options);
 console.log('^options');
 // if we are too low, just output the strict type
-						cpy[prop] = strictType;
+							cpy[prop] = strictType;
+						}
 					}
 				}
 				break;
@@ -68,5 +102,7 @@ console.log('^options');
 		return cpy;
 	};
 	$.copy = $.pt.copy;
+
+
 
 }(Cragnon, window, window.document));

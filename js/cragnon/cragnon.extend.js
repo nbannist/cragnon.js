@@ -207,13 +207,19 @@ console.log('^options');
     var cpy = {}, // assume it's an object
         prop,
         type,
-        argIndex,
+        argIndex = 0,
         thing,
         strictType,
-        simpleType;
+        simpleType,
+        level = 1;
+
+    if ($.isNumber(arguments[argIndex])) {
+      level = arguments[argIndex];
+      argIndex++;
+    }
 
 // loop through the arguments "array"
-    for (argIndex = 0; argIndex < arguments.length; argIndex++) {
+    for (/* init above */; argIndex < arguments.length; argIndex++) {
 // thing shortcut
       thing = arguments[argIndex];
 // loopsie-loopsie-loo
@@ -228,7 +234,12 @@ console.log('^options');
         }
         else {
 // for others, send strict type
-          cpy[prop] = strictType;
+          if (level > 1) {
+            cpy[prop] = $.merge(level-1, thing[prop], {});
+          }
+          else {
+            cpy[prop] = strictType;
+          }
         }
       }
     }
