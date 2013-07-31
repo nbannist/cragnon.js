@@ -28,6 +28,8 @@ console.log('testDearGodWhatIsThatThingLax()...');
 console.log('testCopy()...');
 		testCopy();
 
+console.log('testIsEqual()...');
+		testIsEqual();
 
 //console.log('testExtend()...');
 //		testExtend();
@@ -812,97 +814,39 @@ console.log('testCopy()...');
 		});
 	}
 
+	function testIsEqual() {
+		test('test $.isEqual()', function () {
+			equal($.isEqual(
+				{ 
+					a: 1, b: 'Silly Rabit', c: 'Leave it to Beaver', 
+					d: ['345', 23, 45, {tooManyProperties: 56}], 
+					funnyBusiness: true,
+					baseBall: {extraInnings: false, playBall: true},
+				},
+				{ 
+					a: 1, b: 'Silly Rabit', c: 'Leave it to Beaver', 
+					d: ['345', 23, 45, {tooManyProperties: 56}], 
+					funnyBusiness: true,
+					baseBall: {extraInnings: false, playBall: true},
+				}), true, 'Objects are equal.');
+
+			equal($.isEqual('a', 'b'), false, '"a" is not equal to "b"');
+			equal($.isEqual({}, []), false, 'object is not equal to array');
+			equal($.isEqual({}, true), false, 'empty object is not equal to true');
+			equal($.isEqual(true, false), false, 'true is not equal to false');
+			equal($.isEqual(null, undefined), false, 'null is not equal to undefined.');
+			equal($.isEqual({a:4}, {a:4}), true, '{a:4} === {a:4}');
+		});
+	}
 
 	function testCopy() {
-		var test1 = {a : "8"},
-			test2 = {d: {e: test1}},
-			test3,
-			test4,
-			a = [],
-			b = [],
-			optionsTest1,
-			optionsTest2;
+		var test001 = {songs: {favorite: "Good Vibrations", worst: "Data Not Available."}};
 
-		a[0] = 3
-		a[1] = a;
-
-		b[0] = 3;
-		b[1] = b;
-
-		console.dir(a);
-		console.dir(b);
-
-		//r = JSON.parse(d);
-		//console.dir(r);
-
-		test1.b = test2;
-		test1.b.f = test2;
-
-		test2 = $.copy(test1);
-
-		console.dir(test1);
-		console.dir(test2);
-
-		optionsTest1 = {deep: false, level: 5, decycle: false};
-		//optionsTest2 = {deep: true, level: 0, decycle: true};
-
-		optionsTest2 = $.copy(optionsTest1, {level: 1});
-
-		console.dir(optionsTest1);
-		console.dir(optionsTest2);
-
-		console.log('equal?: ' + $.isEqual(optionsTest1, optionsTest2));
-		console.log('equal?: ' + $.isEqual(a, b));
-
-		/*test('test $.copy(...)', function () {
-
-		});*/
+		test('test $.copy()', function () {
+			equal($.isEqual(test001, $.copy(test001)), true, 'First Copy Test');
+		});
 	}
 
-
-
-	function testPlayGround() {
-		var t1,
-			t2,
-			t3,
-			t4,
-			t5,
-			t6,
-			o1,
-			o2;
-
-// Test out some objects
-		t1 = {a: 'g', b: 4, c: {g: 3}};
-		// .exted(...) makes a copy; doesn't mutate
-		t2 = $.extend(t1, {d: 8, c: {g: 89}, e: 0, f: 42});
-
-		t1.a = 'b';
-		t3 = $.copy(t1);
-
-		console.dir(t1);
-		console.dir(t2);
-		console.dir(t3);
-// Test out some arrays
-		t4 = [,,5,6,5,6,7,8,9];
-		t5 = $.extend(t4, [1,2,3,4]);
-
-		t4[0] = 32;
-		t4[1] = 99;
-
-		t6 = $.copy(t4);
-		t6[4] = 'e';
-
-		console.dir(t4);
-		console.dir(t5);
-		console.dir(t6);
-// test out some object equivalence
-		o1 = {a: 4};
-		o2 = {a: 4};
-		console.log((o1 === o2));
-
-		o2 = o1;
-		console.log((o1 === o2));
-	}
 
 
 } (window, undefined));

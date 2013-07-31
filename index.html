@@ -2,6 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
+
 	<link rel="stylesheet" href="qunit/qunit.css">
 	<style type="text/css">
 		body { margin-top: 60px; }
@@ -49,12 +50,11 @@
 	<script>
 		// ===========================================================
 		// I don't have methods in cragnon for attaching events yet. Do it the old fashioned way. :)
+
 		var runTestButton = document.getElementById('run-tests');
 		runTestButton.onclick = function (e) {
 			runTests(); // see runTests function in test.js
 		};
-
-		runTests();
 
 	</script>
 </body>
